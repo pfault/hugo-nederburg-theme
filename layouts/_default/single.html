@@ -46,6 +46,12 @@
         </div>
         <div class="entry-container">
           <div class="entry-content">
+            {{ if not (and (isset .Params "nosocial") .Params.nosocial) }}
+            <div class='entry-meta'>
+              <span>Share via:</span><br/>
+              {{ partial "sharelinks" . }}
+            </div>
+            {{ end }}
             <article>
               {{ .Content }}
             </article>
@@ -66,20 +72,25 @@
     </p>
   </nav>-->
 
+  {{ if not (and (isset .Params "nocat") .Params.nocat) }}
   <div class="entry-categories"><p><span>Categories</span>
     {{ range $index, $name := .Params.categories }}
     <a href="{{ "/categories/" | relLangURL }}{{ $name | urlize }}" title="View all posts in {{ $name }}">{{ $name }}</a>{{ end }}
-  </p>
-</div>
-
-
-
-<div class="entry-tags"><p><span>Tags</span>
-  {{ range $index, $name := .Params.tags }}
-  <a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}" title="View all posts tagged {{ $name }}">{{ $name }}</a>
+    </p>
+  </div>
   {{ end }}
 
-</p></div>	</div>
+
+  {{ if not (and (isset .Params "notags") .Params.notags) }}
+  <div class="entry-tags"><p><span>Tags</span>
+    {{ range $index, $name := .Params.tags }}
+    <a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}" title="View all posts tagged {{ $name }}">{{ $name }}</a>
+    {{ end }}
+
+    </p>
+  </div>
+  {{ end }}
+</div>
 
 	{{ if and (isset .Site.Params "author") .Site.Params.author }}
 <div class="author-meta">
